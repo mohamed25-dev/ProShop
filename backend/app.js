@@ -1,7 +1,8 @@
-import dotenv from 'dotenv';
-import express from 'express';
+const dotenv = require('dotenv');
+const express = require('express');
+const colors = require('colors');
 const app = express();
-import products from './data/products.js';
+const products = require('./data/products');
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ app.get('/', (req, res) => {
   res.send('API is Listening !!');
 });
 
-app.get('/api/products', (req, res) => {
+app.get('/api/products', async (req, res) => {
   res.send(products);
 });
 
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(
-    `Node is runnig in ${process.env.NODE_ENV}, Listening on PORT ${PORT}`
+    `Node is runnig in ${process.env.NODE_ENV}, Listening on PORT ${PORT}`.blue
+      .bold
   );
 });
