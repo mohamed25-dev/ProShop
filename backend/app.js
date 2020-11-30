@@ -1,23 +1,25 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const colors = require('colors');
+const { dev, prod } = require('./src/middleware/errorMiddleware');
+
 const app = express();
-const products = require('./data/products');
+
+const productRoutes = require('./src/routes/product');
 
 dotenv.config();
+
+app.use('/api/products', productRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is Listening !!');
 });
 
-app.get('/api/products', async (req, res) => {
-  res.send(products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.send(product);
-});
+if (app.get('env') === 'development') {
+  app.use(dev);
+} else {
+  app.use(prod);
+}
 
 const PORT = process.env.PORT || 4000;
 
