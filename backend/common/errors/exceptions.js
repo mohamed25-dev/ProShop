@@ -20,7 +20,7 @@ class UnauthorizedException extends ErrorHandler {
 
 class UnauthenticatedException extends ErrorHandler {
   constructor(message) {
-    super(message || 'Unauthorized', 403);
+    super(message || 'Unauthorized', 401);
   }
 }
 

@@ -6,10 +6,13 @@ const { dev, prod } = require('./src/middleware/errorMiddleware');
 const app = express();
 
 const productRoutes = require('./src/routes/product');
+const userRoutes = require('./src/routes/user');
 
 dotenv.config();
+app.use(express.json());
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is Listening !!');

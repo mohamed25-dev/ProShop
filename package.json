@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/mohammed2571994/ProShop#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "biguint-format": "^1.0.2",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "flake-idgen": "^1.4.0",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5",
     "sequelize-auto": "^0.7.2"
