@@ -50,3 +50,10 @@ exports.loginUser = async (req, res) => {
 
   return responseWrapper.success(res, user);
 };
+
+exports.getUserProfile = async (req, res) => {
+  let userId = req.user.id;
+  let user = await userService.getUserById(userId);
+
+  return responseWrapper.success(res, user);
+};

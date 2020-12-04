@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { getId } = require('../../common/idGenerator');
+const { generateAuthToken } = require('../../common/token');
 const {
   NotFoundException,
   BadRequestException,
@@ -12,8 +13,8 @@ exports.getAllUsers = () => {
   return userDao.getAllUsers();
 };
 
-exports.getUserById = (productId) => {
-  return userDao.getUserById(productId);
+exports.getUserById = (userId) => {
+  return userDao.getUserById(userId);
 };
 
 exports.loginUser = async (email, password) => {
@@ -29,7 +30,9 @@ exports.loginUser = async (email, password) => {
 
   delete user.password;
 
-  return user;
+  let token = generateAuthToken(user);
+
+  return { user, token };
 };
 
 exports.getUserByEmail = (userEmail) => {
