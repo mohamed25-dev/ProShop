@@ -30,9 +30,9 @@ exports.loginUser = async (email, password) => {
 
   delete user.password;
 
-  let token = generateAuthToken(user);
+  user.token = generateAuthToken(user);
 
-  return { user, token };
+  return user;
 };
 
 exports.getUserByEmail = (userEmail) => {
@@ -48,6 +48,7 @@ exports.createUser = async (user) => {
   let id = getId();
 
   user.id = id;
+  user.role_id = 1;
   user.password = await bcrypt.hash(user.password, 8);
 
   await userDao.createUser(user);
