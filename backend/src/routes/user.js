@@ -8,6 +8,7 @@ const userController = require('../controllers/user');
 router.get('/', userController.getAllUsers);
 
 router.get('/profile', isAuthenticated, userController.getUserProfile);
+router.patch('/profile', isAuthenticated, userController.updateUserProfile);
 
 router.get('/:id', userController.getUserById);
 

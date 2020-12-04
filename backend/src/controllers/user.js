@@ -57,3 +57,11 @@ exports.getUserProfile = async (req, res) => {
 
   return responseWrapper.success(res, user);
 };
+
+exports.updateUserProfile = async (req, res) => {
+  let userId = req.user.id;
+
+  await userService.updateUser(userId, req.body);
+
+  return responseWrapper.success(res, {});
+};

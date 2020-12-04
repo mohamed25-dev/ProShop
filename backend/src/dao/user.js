@@ -30,3 +30,18 @@ exports.createUser = (user) => {
     updated_at: new Date(),
   });
 };
+
+exports.updateUser = (user) => {
+  return User.update(
+    {
+      ...user,
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
+    {
+      where: {
+        id: user.id,
+      },
+    }
+  );
+};

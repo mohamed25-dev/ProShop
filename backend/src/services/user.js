@@ -56,3 +56,30 @@ exports.createUser = async (user) => {
   delete user.password;
   return user;
 };
+
+exports.updateUser = async (userId, updateUser) => {
+  let user = await userDao.getUserById(userId);
+  if (!user) {
+    throw new NotFoundException('User Not Found');
+  }
+
+  if (updateUser.email) {
+    let userExist = await userDao.getUserByEmail(updateUser.email);
+    if (userExist && userExist.id !== userId) {
+      throw new BadRequestException('User with the same email exist');
+    }
+    user.email = updateUser.email;
+  }
+
+  user.name = updateUser.name || user.name;
+  user.mobile_number = updateUser.mobile_number || user.mobile_number;
+
+  if (updateUser.password) {
+    user.password = await bcrypt.hash(updateUser.password, 8);
+  }
+
+  await userDao.updateUser(user);
+
+  delete user.password;
+  return user;
+};
