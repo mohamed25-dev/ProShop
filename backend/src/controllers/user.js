@@ -61,7 +61,7 @@ exports.getUserProfile = async (req, res) => {
 exports.updateUserProfile = async (req, res) => {
   let userId = req.user.id;
 
-  await userService.updateUser(userId, req.body);
+  let user = await userService.updateUser(userId, req.body);
 
-  return responseWrapper.success(res, {});
+  return responseWrapper.success(res, user);
 };

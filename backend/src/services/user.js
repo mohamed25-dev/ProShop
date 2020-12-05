@@ -80,6 +80,7 @@ exports.updateUser = async (userId, updateUser) => {
 
   await userDao.updateUser(user);
 
+  user = await userDao.getUserById(userId);
   delete user.password;
   return user;
 };
