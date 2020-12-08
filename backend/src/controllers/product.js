@@ -6,7 +6,7 @@ const productService = require('../services/product');
 const responseWrapper = require('../../common/response/success');
 
 exports.getAllProducts = async (req, res) => {
-  let products = await productService.getAllProducst();
+  let products = await productService.getAllProducts();
   return responseWrapper.success(res, products);
 };
 

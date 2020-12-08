@@ -1,8 +1,16 @@
 const db = require('../models');
 const Product = db.product;
 
-exports.getAllProducst = () => {
+exports.getAllProducts = () => {
   return Product.findAll();
+};
+
+exports.getProductsByIds = (ids) => {
+  return Product.findAll({
+    where: {
+      id: ids,
+    },
+  });
 };
 
 exports.getProductById = (productId) => {

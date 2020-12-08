@@ -1,7 +1,7 @@
 const productDao = require('../dao/product');
 
-exports.getAllProducst = () => {
-  return productDao.getAllProducst();
+exports.getAllProducts = () => {
+  return productDao.getAllProducts();
 };
 
 exports.getProductById = (productId) => {

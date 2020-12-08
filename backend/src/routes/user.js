@@ -5,15 +5,17 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
 
-router.get('/', userController.getAllUsers);
+router
+  .route('/')
+  .get(userController.getAllUsers)
+  .post(userController.createUser);
 
-router.get('/profile', isAuthenticated, userController.getUserProfile);
-router.patch('/profile', isAuthenticated, userController.updateUserProfile);
+router
+  .route('/profile')
+  .get(isAuthenticated, userController.getUserProfile)
+  .post(isAuthenticated, userController.updateUserProfile);
 
-router.get('/:id', userController.getUserById);
-
-router.post('/', userController.createUser);
-
-router.post('/login', userController.loginUser);
+router.route('/login').post(userController.loginUser);
+router.route('/:id').get(userController.getUserById);
 
 module.exports = router;
