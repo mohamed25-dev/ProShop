@@ -20,7 +20,7 @@ exports.getOrdersByUserId = (userId) => {
 exports.createOrder = (order) => {
   return Order.create({
     ...order,
-    created_at: new Date(),
-    updated_at: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 };

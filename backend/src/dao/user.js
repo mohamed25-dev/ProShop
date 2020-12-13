@@ -14,20 +14,23 @@ exports.getUserById = async (userId) => {
 };
 
 exports.getUserByEmail = async (userEmail) => {
+  console.log('Dao');
+
   let result = await User.findOne({
     where: {
       email: userEmail,
     },
   });
 
+  console.log(result.toJSON());
   return Promise.resolve(result === null ? null : result.toJSON());
 };
 
 exports.createUser = (user) => {
   return User.create({
     ...user,
-    created_at: new Date(),
-    updated_at: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 };
 
@@ -35,8 +38,8 @@ exports.updateUser = (user) => {
   return User.update(
     {
       ...user,
-      created_at: new Date(),
-      updated_at: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
       where: {

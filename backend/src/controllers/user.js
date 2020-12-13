@@ -28,9 +28,9 @@ exports.createUser = async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    role_id: req.body.roel_id,
-    mobile_number: req.body.mobile_number,
-    profile_image: req.body.profile_image,
+    roleId: req.body.roleId,
+    mobileNumber: req.body.mobileNumber,
+    profileImage: req.body.profileImage,
   };
 
   user = await userService.createUser(user);
@@ -41,6 +41,7 @@ exports.createUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
+  console.log('Login Compare');
 
   let user = await userService.loginUser(email, password);
 

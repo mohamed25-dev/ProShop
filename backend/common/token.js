@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 exports.generateAuthToken = (userData) => {
-  let payload = ({ id, name, email, role_id, mobile_number } = userData);
+  console.log(userData);
+  let payload = ({ id, name, email, roleId, mobileNumber } = userData);
   return jwt.sign(payload, process.env.JWT_SECRET);
 };
 

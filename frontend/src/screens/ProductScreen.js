@@ -79,7 +79,7 @@ const ProductScreen = ({ history, match }) => {
                   Add To Cart
                 </Button>
               </ListGroup.Item>
-              {product.quantity_in_stock > 0 && (
+              {product.quantityInStock > 0 && (
                 <ListGroup.Item>
                   <Row>
                     <Col>Qty</Col>
@@ -89,13 +89,11 @@ const ProductScreen = ({ history, match }) => {
                         value={qty}
                         onChange={(e) => setQty(e.target.value)}
                       >
-                        {[...Array(product.quantity_in_stock).keys()].map(
-                          (i) => (
-                            <option key={i + 1} value={i + 1}>
-                              {i + 1}
-                            </option>
-                          )
-                        )}
+                        {[...Array(product.quantityInStock).keys()].map((i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
                       </Form.Control>
                     </Col>
                   </Row>

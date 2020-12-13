@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
+    userId: {
       type: DataTypes.STRING(255),
       allowNull: false,
       references: {
@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    product_id: {
+    productId: {
       type: DataTypes.STRING(255),
       allowNull: false,
       references: {
@@ -32,20 +32,11 @@ module.exports = function(sequelize, DataTypes) {
     comment: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'review',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -59,14 +50,14 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_review_product1_idx",
         using: "BTREE",
         fields: [
-          { name: "product_id" },
+          { name: "productId" },
         ]
       },
       {
         name: "fk_review_user1_idx",
         using: "BTREE",
         fields: [
-          { name: "user_id" },
+          { name: "userId" },
         ]
       },
     ]

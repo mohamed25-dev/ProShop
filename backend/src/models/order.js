@@ -10,16 +10,16 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.STRING(45),
         allowNull: false,
       },
-      total_price: {
+      totalPrice: {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: false,
         defaultValue: 0,
       },
-      status_id: {
+      statusId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      payment_id: {
+      paymentId: {
         type: DataTypes.STRING(255),
         allowNull: true,
         references: {
@@ -35,21 +35,11 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
     },
     {
       sequelize,
       tableName: 'order',
-      timestamps: false,
+      timestamps: true,
       indexes: [
         {
           name: 'PRIMARY',
@@ -60,12 +50,12 @@ module.exports = function (sequelize, DataTypes) {
         {
           name: 'fk_order_order_status1_idx',
           using: 'BTREE',
-          fields: [{ name: 'status_id' }],
+          fields: [{ name: 'statusId' }],
         },
         {
           name: 'fk_order_payment1_idx',
           using: 'BTREE',
-          fields: [{ name: 'payment_id' }],
+          fields: [{ name: 'paymentId' }],
         },
       ],
     }

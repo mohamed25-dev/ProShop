@@ -22,24 +22,24 @@ function initModels(sequelize) {
   var role = _role(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
 
-  order.belongsTo(payment, { foreignKey: "payment_id"});
-  payment.hasMany(order, { foreignKey: "payment_id"});
-  order.belongsTo(order_status, { foreignKey: "status_id"});
-  order_status.hasMany(order, { foreignKey: "status_id"});
-  order_items.belongsTo(order, { foreignKey: "order_id"});
-  order.hasMany(order_items, { foreignKey: "order_id"});
-  order_items.belongsTo(product, { foreignKey: "product_id"});
-  product.hasMany(order_items, { foreignKey: "product_id"});
-  payment.belongsTo(payment_method, { foreignKey: "payment_method_id"});
-  payment_method.hasMany(payment, { foreignKey: "payment_method_id"});
-  product.belongsTo(category, { foreignKey: "category_id"});
-  category.hasMany(product, { foreignKey: "category_id"});
-  review.belongsTo(product, { foreignKey: "product_id"});
-  product.hasMany(review, { foreignKey: "product_id"});
-  review.belongsTo(user, { foreignKey: "user_id"});
-  user.hasMany(review, { foreignKey: "user_id"});
-  user.belongsTo(role, { foreignKey: "role_id"});
-  role.hasMany(user, { foreignKey: "role_id"});
+  order.belongsTo(payment, { foreignKey: "paymentId"});
+  payment.hasMany(order, { foreignKey: "paymentId"});
+  order.belongsTo(order_status, { foreignKey: "statusId"});
+  order_status.hasMany(order, { foreignKey: "statusId"});
+  order_items.belongsTo(order, { foreignKey: "orderId"});
+  order.hasMany(order_items, { foreignKey: "orderId"});
+  order_items.belongsTo(product, { foreignKey: "productId"});
+  product.hasMany(order_items, { foreignKey: "productId"});
+  payment.belongsTo(payment_method, { foreignKey: "paymentMethodId"});
+  payment_method.hasMany(payment, { foreignKey: "paymentMethodId"});
+  product.belongsTo(category, { foreignKey: "categoryId"});
+  category.hasMany(product, { foreignKey: "categoryId"});
+  review.belongsTo(product, { foreignKey: "productId"});
+  product.hasMany(review, { foreignKey: "productId"});
+  review.belongsTo(user, { foreignKey: "userId"});
+  user.hasMany(review, { foreignKey: "userId"});
+  user.belongsTo(role, { foreignKey: "roleId"});
+  role.hasMany(user, { foreignKey: "roleId"});
 
   return {
     category,

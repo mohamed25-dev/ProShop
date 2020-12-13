@@ -18,15 +18,18 @@ exports.getUserById = (userId) => {
 };
 
 exports.loginUser = async (email, password) => {
+  console.log('Service Compare');
+
   let user = await userDao.getUserByEmail(email);
   if (!user) {
     return;
   }
-
+  console.log('Before Compare');
   let isCorrect = await bcrypt.compare(password, user.password);
   if (!isCorrect) {
     return;
   }
+  console.log('After Compare');
 
   delete user.password;
 
@@ -48,7 +51,7 @@ exports.createUser = async (user) => {
   let id = getId();
 
   user.id = id;
-  user.role_id = 1;
+  user.roleId = 1;
   user.password = await bcrypt.hash(user.password, 8);
 
   await userDao.createUser(user);

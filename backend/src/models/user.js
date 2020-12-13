@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    role_id: {
+    roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -29,29 +29,19 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    mobile_number: {
+    mobileNumber: {
       type: DataTypes.STRING(50),
       allowNull: false,
       unique: "mobile_number_UNIQUE"
     },
-    profile_image: {
+    profileImage: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'user',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -66,7 +56,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "mobile_number" },
+          { name: "mobileNumber" },
         ]
       },
       {
@@ -81,7 +71,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_user_role_idx",
         using: "BTREE",
         fields: [
-          { name: "role_id" },
+          { name: "roleId" },
         ]
       },
     ]

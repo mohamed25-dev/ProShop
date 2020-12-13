@@ -29,7 +29,7 @@ exports.getOrdersByUserId = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
-  let userId = req.params.id;
+  let userId = req.user.id;
   let orderItems = req.body;
 
   let orders = await orderService.createOrder(userId, orderItems);

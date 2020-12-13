@@ -1,6 +1,5 @@
 const { getId } = require('../../common/idGenerator');
 const orderDao = require('../dao/order');
-const productDao = require('../dao/product');
 const orderItemsDao = require('../dao/orderItems');
 
 exports.getAllOrders = () => {
@@ -20,19 +19,19 @@ exports.createOrder = async (userId, orderItems) => {
 
   let order = {
     id,
-    user_id: userId,
-    status_id: 1,
+    userId,
+    statusId: 1,
   };
 
   let totalPrice = orderItems.reduce(
-    (acc, item) => acc + item.unit_price * item.quantity,
+    (acc, item) => acc + item.unitPrice * item.quantity,
     0
   );
 
-  order.total_price = totalPrice;
+  order.totalPrice = totalPrice;
   order = await orderDao.createOrder(order);
 
-  orderItems.forEach((item) => (item.order_id = id));
+  orderItems.forEach((item) => (item.orderId = id));
   await orderItemsDao.createBulk(orderItems);
 
   return order;

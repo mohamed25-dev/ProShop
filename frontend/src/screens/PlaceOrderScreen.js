@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckOutSteps from '../components/CheckoutSteps';
+import { createOrder } from '../actions/orderAction';
 
-const PlaceOrderScreen = () => {
+const PlaceOrderScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
@@ -22,13 +25,34 @@ const PlaceOrderScreen = () => {
   cart.totalPrice = addDecimals(
     Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
   );
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      // history.push('/');
+    }
+  }, [history, success]);
+
   const placeOrderHandler = (e) => {
-    console.log('Place Order');
+    let data = cart.cartItems.map((item) => {
+      return {
+        productId: item.product,
+        unitPrice: item.price,
+        quantity: item.qty,
+      };
+    });
+
+    dispatch(createOrder(data));
   };
+
   return (
     <>
-      <CheckOutSteps step1 step2 step4 />
+      <CheckOutSteps step1 step2 step3 step4 />
       <h1>Place Order</h1>
+      {error && <Message variant="danger">{error}</Message>}
+      {success && <Message>Order Created</Message>}
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">

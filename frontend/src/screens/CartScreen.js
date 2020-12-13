@@ -68,7 +68,7 @@ const CartScreen = ({ match, location, history }) => {
                         )
                       }
                     >
-                      {[...Array(item.quantity_in_stock).keys()].map((i) => (
+                      {[...Array(item.quantityInStock).keys()].map((i) => (
                         <option key={i + 1} value={i + 1}>
                           {i + 1}
                         </option>

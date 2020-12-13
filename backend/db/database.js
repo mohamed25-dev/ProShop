@@ -13,7 +13,7 @@ const config = {
     charset: process.env.DB_CHARSET,
     collate: process.env.DB_COLLATE,
     timestamps: false,
-    underscored: true,
+    underscored: false,
   },
 };
 

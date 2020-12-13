@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
+    userId: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    payment_method_id: {
+    paymentMethodId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -23,16 +23,11 @@ module.exports = function(sequelize, DataTypes) {
     amount: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: false
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'payment',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -46,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_payment_payment_method1_idx",
         using: "BTREE",
         fields: [
-          { name: "payment_method_id" },
+          { name: "paymentMethodId" },
         ]
       },
     ]

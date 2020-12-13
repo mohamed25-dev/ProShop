@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(10,0),
       allowNull: false
     },
-    quantity_in_stock: {
+    quantityInStock: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    category_id: {
+    categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -31,21 +31,11 @@ module.exports = function(sequelize, DataTypes) {
     image: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'product',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -59,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_product_category1_idx",
         using: "BTREE",
         fields: [
-          { name: "category_id" },
+          { name: "categoryId" },
         ]
       },
     ]

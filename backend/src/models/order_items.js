@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      product_id: {
+      productId: {
         type: DataTypes.STRING(255),
         allowNull: false,
         primaryKey: true,
@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      order_id: {
+      orderId: {
         type: DataTypes.STRING(255),
         allowNull: false,
         primaryKey: true,
@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      unit_price: {
+      unitPrice: {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: false,
         defaultValue: 0,
@@ -45,12 +45,12 @@ module.exports = function (sequelize, DataTypes) {
         {
           name: 'fk_order_items_product1_idx',
           using: 'BTREE',
-          fields: [{ name: 'product_id' }],
+          fields: [{ name: 'productId' }],
         },
         {
           name: 'fk_order_items_order1_idx',
           using: 'BTREE',
-          fields: [{ name: 'order_id' }],
+          fields: [{ name: 'orderId' }],
         },
       ],
     }

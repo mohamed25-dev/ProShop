@@ -4,7 +4,7 @@ const OrderItems = db.order_items;
 exports.getItemsByOrdertId = (orderId) => {
   return OrderItems.findAll({
     where: {
-      order_id: orderId,
+      orderId,
     },
   });
 };
