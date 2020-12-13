@@ -32,7 +32,9 @@ exports.createOrder = async (userId, orderItems) => {
     0
   );
 
-  order.totalPrice = totalPrice;
+  totalPrice > 100 ? (order.shippingPrice = 100) : (order.shippingPrice = 0);
+  order.taxPrice = totalPrice * 0.2;
+
   order = await orderDao.createOrder(order);
 
   orderItems.forEach((item) => (item.orderId = id));

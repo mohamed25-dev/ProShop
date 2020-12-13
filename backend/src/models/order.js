@@ -11,14 +11,19 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       userId: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(255),
         allowNull: false,
         references: {
           model: 'user',
           key: 'id',
         },
       },
-      totalPrice: {
+      shippingPrice: {
+        type: DataTypes.DECIMAL(10, 0),
+        allowNull: false,
+        defaultValue: 0,
+      },
+      taxPrice: {
         type: DataTypes.DECIMAL(10, 0),
         allowNull: false,
         defaultValue: 0,
