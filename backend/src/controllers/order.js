@@ -21,6 +21,17 @@ exports.getOrderByOrderId = async (req, res) => {
   return responseWrapper.success(res, order);
 };
 
+exports.getOrderDetails = async (req, res) => {
+  let orderId = req.params.id;
+  let order = await orderService.getOrderDetails(orderId);
+
+  if (!order) {
+    throw new NotFoundException('Order Not Found');
+  }
+
+  return responseWrapper.success(res, order);
+};
+
 exports.getOrdersByUserId = async (req, res) => {
   let userId = req.params.id;
   let orders = await orderService.getOrderById(userId);

@@ -13,7 +13,7 @@ router
 router
   .route('/profile')
   .get(isAuthenticated, userController.getUserProfile)
-  .post(isAuthenticated, userController.updateUserProfile);
+  .patch(isAuthenticated, userController.updateUserProfile);
 
 router.route('/login').post(userController.loginUser);
 router.route('/:id').get(userController.getUserById);

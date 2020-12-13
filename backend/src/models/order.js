@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define(
+  const Order = sequelize.define(
     'order',
     {
       id: {
@@ -13,6 +13,10 @@ module.exports = function (sequelize, DataTypes) {
       userId: {
         type: DataTypes.STRING(45),
         allowNull: false,
+        references: {
+          model: 'user',
+          key: 'id',
+        },
       },
       totalPrice: {
         type: DataTypes.DECIMAL(10, 0),
@@ -60,4 +64,29 @@ module.exports = function (sequelize, DataTypes) {
       ],
     }
   );
+
+  Order.associate = function (models) {
+    // associations can be defined here
+    Order.belongsTo(models.user, {
+      foreignKey: 'userId',
+      as: 'customer',
+    });
+
+    Order.belongsTo(models.order_status, {
+      foreignKey: 'statusId',
+      as: 'status',
+    });
+
+    Order.belongsTo(models.payment, {
+      foreignKey: 'paymentId',
+      as: 'payment',
+    });
+
+    Order.hasMany(models.order_items, {
+      foreignKey: 'orderId',
+      as: 'items',
+    });
+  };
+
+  return Order;
 };

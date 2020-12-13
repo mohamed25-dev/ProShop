@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define(
+  const OrderItems = sequelize.define(
     'order_items',
     {
       quantity: {
@@ -55,4 +55,19 @@ module.exports = function (sequelize, DataTypes) {
       ],
     }
   );
+
+  OrderItems.associate = function (models) {
+    // associations can be defined here
+    OrderItems.belongsTo(models.order, {
+      foreignKey: 'orderId',
+      as: 'order',
+    });
+
+    OrderItems.belongsTo(models.product, {
+      foreignKey: 'productId',
+      as: 'product',
+    });
+  };
+
+  return OrderItems;
 };

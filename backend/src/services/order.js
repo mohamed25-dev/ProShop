@@ -10,6 +10,10 @@ exports.getOrderById = (orderId) => {
   return orderDao.getOrderById(orderId);
 };
 
+exports.getOrderDetails = (orderId) => {
+  return orderDao.getOrderDetails(orderId);
+};
+
 exports.getOrdersByUserId = (userId) => {
   return orderDao.getOrdersByUserId(userId);
 };

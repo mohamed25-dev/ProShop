@@ -6,5 +6,6 @@ const orderController = require('../controllers/order');
 const { isAuthenticated } = require('../middleware/authMiddleware');
 
 router.route('/').post(isAuthenticated, orderController.createOrder);
+router.route('/:id').get(isAuthenticated, orderController.getOrderDetails);
 
 module.exports = router;
