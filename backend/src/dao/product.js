@@ -16,3 +16,11 @@ exports.getProductsByIds = (ids) => {
 exports.getProductById = (productId) => {
   return Product.findByPk(productId);
 };
+
+exports.updateProductInStock = async (productId, count) => {
+  const product = await Product.findByPk(productId);
+
+  await product.increment({ quantityInStock: count });
+
+  return;
+};

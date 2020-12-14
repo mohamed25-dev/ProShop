@@ -22,7 +22,6 @@ exports.getUserByEmail = async (userEmail) => {
     },
   });
 
-  console.log(result.toJSON());
   return Promise.resolve(result === null ? null : result.toJSON());
 };
 

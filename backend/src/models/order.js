@@ -36,14 +36,6 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      paymentId: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        references: {
-          model: 'payment',
-          key: 'id',
-        },
-      },
     },
     {
       sequelize,
@@ -61,11 +53,6 @@ module.exports = function (sequelize, DataTypes) {
           using: 'BTREE',
           fields: [{ name: 'statusId' }],
         },
-        {
-          name: 'fk_order_payment1_idx',
-          using: 'BTREE',
-          fields: [{ name: 'paymentId' }],
-        },
       ],
     }
   );
@@ -82,14 +69,19 @@ module.exports = function (sequelize, DataTypes) {
       as: 'status',
     });
 
-    Order.belongsTo(models.payment, {
-      foreignKey: 'paymentId',
-      as: 'payment',
-    });
-
     Order.hasMany(models.order_items, {
       foreignKey: 'orderId',
       as: 'items',
+    });
+
+    Order.hasOne(models.shipping_address, {
+      foreignKey: 'orderId',
+      as: 'shippingAddress',
+    });
+
+    Order.hasOne(models.payment, {
+      foreignKey: 'orderId',
+      as: 'payment',
     });
   };
 

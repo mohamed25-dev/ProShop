@@ -47,3 +47,16 @@ exports.createOrder = async (req, res) => {
 
   return responseWrapper.success(res, orders);
 };
+
+exports.payOrder = async (req, res) => {
+  let paymentData = {
+    userId: req.user.id,
+    orderId: req.params.id,
+    amount: req.body.amount,
+    paymentMethodId: req.body.paymentMethodId,
+  };
+
+  let orders = await orderService.payOrder(paymentData);
+
+  return responseWrapper.success(res, orders);
+};
