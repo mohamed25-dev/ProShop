@@ -14,6 +14,7 @@ const config = {
     collate: process.env.DB_COLLATE,
     timestamps: false,
     underscored: false,
+    freezeTableName: true,
   },
 };
 
