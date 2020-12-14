@@ -66,6 +66,13 @@ exports.getOrdersByUserId = (userId) => {
     where: {
       userId,
     },
+    include: [
+      includeOrderItems,
+      includeUser,
+      includeOrderStatus,
+      includeShippingAddress,
+      includePayment,
+    ],
   });
 };
 

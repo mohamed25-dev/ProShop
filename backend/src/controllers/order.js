@@ -34,7 +34,14 @@ exports.getOrderDetails = async (req, res) => {
 
 exports.getOrdersByUserId = async (req, res) => {
   let userId = req.params.id;
-  let orders = await orderService.getOrderById(userId);
+  let orders = await orderService.getOrdersByUserId(userId);
+
+  return responseWrapper.success(res, orders);
+};
+
+exports.getLoggedInUserOrders = async (req, res) => {
+  let userId = req.user.id;
+  let orders = await orderService.getOrdersByUserId(userId);
 
   return responseWrapper.success(res, orders);
 };
