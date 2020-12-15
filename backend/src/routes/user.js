@@ -1,5 +1,5 @@
 require('express-async-errors');
-const { isAuthenticated } = require('../middleware/authMiddleware');
+const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
 
 const express = require('express');
 const router = express.Router();
@@ -7,7 +7,7 @@ const userController = require('../controllers/user');
 
 router
   .route('/')
-  .get(userController.getAllUsers)
+  .get(isAuthenticated, isAdmin, userController.getAllUsers)
   .post(userController.createUser);
 
 router

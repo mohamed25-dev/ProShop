@@ -1,4 +1,7 @@
-const { UnauthenticatedException } = require('../../common/errors/exceptions');
+const {
+  UnauthenticatedException,
+  UnauthorizedException,
+} = require('../../common/errors/exceptions');
 const { verifyAuthToken, decode } = require('../../common/token');
 
 exports.isAuthenticated = async (req, res, next) => {
@@ -18,4 +21,14 @@ exports.isAuthenticated = async (req, res, next) => {
   req.user = user;
 
   next();
+};
+
+exports.isAdmin = async (req, res, next) => {
+  if (req.user && req.user.roleId === 1) {
+    return next();
+  }
+
+  throw new UnauthorizedException(
+    "You don't have permissions to access this route"
+  );
 };
