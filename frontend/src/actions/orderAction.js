@@ -10,6 +10,9 @@ import {
   ORDER_PAY_SUCCESS,
   ORDER_PAY_REQUEST,
   ORDER_PAY_FAIL,
+  ORDER_LIST_ME_SUCCESS,
+  ORDER_LIST_ME_REQUEST,
+  ORDER_LIST_ME_FAIL,
 } from '../constants/orderConstants';
 
 export const createOrder = (orderItems) => async (dispatch, getState) => {
@@ -96,7 +99,7 @@ export const payOrder = (orderId) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.patcj(`/api/orders/${orderId}/pay`, config);
+    const { data } = await axios.patch(`/api/orders/${orderId}/pay`, config);
 
     dispatch({
       type: ORDER_PAY_SUCCESS,
@@ -105,6 +108,40 @@ export const payOrder = (orderId) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_LIST_ME_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    let config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/orders/me', config);
+
+    dispatch({
+      type: ORDER_LIST_ME_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_ME_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

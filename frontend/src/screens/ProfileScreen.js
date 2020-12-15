@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Table } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { listMyOrders } from '../actions/orderAction';
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('');
@@ -25,12 +27,29 @@ const ProfileScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const orderListMe = useSelector((state) => state.orderListMe);
+  const { loading: ordersLoading, error: ordersError, orders } = orderListMe;
+
+  let totalPrice = 0;
+  if (!ordersLoading) {
+    orders.map((order) => {
+      const itemsPrice = order.items.reduce(
+        (acc, item) => acc + Number(item.unitPrice),
+        0
+      );
+      totalPrice =
+        Number(itemsPrice) +
+        Number(order.shippingPrice) +
+        Number(order.taxPrice);
+    });
+  }
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'));
+        dispatch(listMyOrders());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -115,6 +134,55 @@ const ProfileScreen = ({ history }) => {
       </Col>
       <Col md={8}>
         <h2>My Orders</h2>
+        {ordersLoading ? (
+          <Loader />
+        ) : ordersError ? (
+          <Message variant="danger"> {ordersError}</Message>
+        ) : (
+          <Table striped bordered hover responsive className="table-sm">
+            <thead>
+              <tr>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => {
+                const itemsPrice = order.items.reduce(
+                  (acc, item) => acc + Number(item.unitPrice),
+                  0
+                );
+                totalPrice =
+                  Number(itemsPrice) +
+                  Number(order.shippingPrice) +
+                  Number(order.taxPrice);
+
+                return (
+                  <tr key={order.id}>
+                    <td>{order.createdAt.substring(0, 10)}</td>
+                    <td>{totalPrice}</td>
+                    <td>
+                      {order.statusId === 1
+                        ? 'Created'
+                        : order.statusId === 2
+                        ? 'Paid'
+                        : 'Delivered'}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${order.id}`}>
+                        <Button variant="info" className="btn-sm">
+                          Details
+                        </Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
       </Col>
     </Row>
   );
