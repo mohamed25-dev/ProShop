@@ -65,3 +65,10 @@ exports.updateUserProfile = async (req, res) => {
 
   return responseWrapper.success(res, user);
 };
+
+exports.deleteUser = async (req, res) => {
+  let userId = req.user.id;
+  let user = await userService.deleteUser(userId);
+
+  return responseWrapper.success(res, user);
+};

@@ -47,3 +47,11 @@ exports.updateUser = (user) => {
     }
   );
 };
+
+exports.deleteUser = (userId) => {
+  return User.destroy({
+    where: {
+      id: userId,
+    },
+  });
+};

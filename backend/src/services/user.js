@@ -84,3 +84,12 @@ exports.updateUser = async (userId, updateUser) => {
   delete user.password;
   return user;
 };
+
+exports.deleteUser = async (userId) => {
+  const user = userDao.getUserById(userId);
+  if (!user) {
+    throw new NotFoundException('User not found');
+  }
+
+  return userDao.deleteUser(userId);
+};

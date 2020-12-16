@@ -16,6 +16,10 @@ router
   .patch(isAuthenticated, userController.updateUserProfile);
 
 router.route('/login').post(userController.loginUser);
-router.route('/:id').get(userController.getUserById);
+
+router
+  .route('/:id')
+  .get(isAuthenticated, isAdmin, userController.getUserById)
+  .delete(isAuthenticated, isAdmin, userController.deleteUser);
 
 module.exports = router;
