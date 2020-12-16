@@ -3,6 +3,7 @@ const {
   UnauthorizedException,
 } = require('../../common/errors/exceptions');
 const { verifyAuthToken, decode } = require('../../common/token');
+const { Roles } = require('../../common/constants');
 
 exports.isAuthenticated = async (req, res, next) => {
   let token = req.headers.authorization;
@@ -24,7 +25,7 @@ exports.isAuthenticated = async (req, res, next) => {
 };
 
 exports.isAdmin = async (req, res, next) => {
-  if (req.user && req.user.roleId === 1) {
+  if (req.user && req.user.roleId === Roles.ADMIN_ROLE) {
     return next();
   }
 

@@ -14,9 +14,7 @@ exports.getUserById = async (userId) => {
 };
 
 exports.getUserByEmail = async (userEmail) => {
-  console.log('Dao');
-
-  let result = await User.findOne({
+  const result = await User.findOne({
     where: {
       email: userEmail,
     },
@@ -25,12 +23,14 @@ exports.getUserByEmail = async (userEmail) => {
   return Promise.resolve(result === null ? null : result.toJSON());
 };
 
-exports.createUser = (user) => {
-  return User.create({
+exports.createUser = async (user) => {
+  const result = await User.create({
     ...user,
     createdAt: new Date(),
     updatedAt: new Date(),
   });
+
+  return Promise.resolve(result === null ? null : result.toJSON());
 };
 
 exports.updateUser = (user) => {

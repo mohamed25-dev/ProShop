@@ -41,7 +41,6 @@ exports.createUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
-  console.log('Login Compare');
 
   let user = await userService.loginUser(email, password);
 

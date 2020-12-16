@@ -28,12 +28,16 @@ exports.loginUser = async (email, password) => {
   }
 
   user.token = generateAuthToken(user);
+  delete user.password;
 
   return user;
 };
 
-exports.getUserByEmail = (userEmail) => {
-  return userDao.getUserByEmail(userEmail);
+exports.getUserByEmail = async (userEmail) => {
+  let user = await userDao.getUserByEmail(userEmail);
+  delete user.password;
+
+  return user;
 };
 
 exports.createUser = async (user) => {

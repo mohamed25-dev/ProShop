@@ -45,9 +45,9 @@ module.exports = function (sequelize, DataTypes) {
       sequelize,
       tableName: 'user',
       timestamps: true,
-      defaultScope: {
-        attributes: { exclude: ['password'] },
-      },
+      // defaultScope: {
+      //   attributes: { exclude: ['password'] },
+      // },
       indexes: [
         {
           name: 'PRIMARY',
