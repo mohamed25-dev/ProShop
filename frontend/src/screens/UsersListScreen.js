@@ -4,7 +4,7 @@ import { Button, Tab, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers } from '../actions/userActions';
+import { listUsers, deleteUser } from '../actions/userActions';
 import { Roles } from '../common/constants';
 
 const UsersListScreen = ({ history }) => {
@@ -16,8 +16,17 @@ const UsersListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    error: errorDelete,
+    success: successDelete,
+    loading: loadingDelete,
+  } = userDelete;
+
   const deleteHandler = (userId) => {
-    console.log('Delete User');
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteUser(userId));
+    }
   };
 
   useEffect(() => {
@@ -26,12 +35,21 @@ const UsersListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, userDelete]);
 
   return (
     <>
       <h1>Users: </h1>
       <div>
+        {errorDelete ? (
+          <Message variant="danger">{errorDelete}</Message>
+        ) : loadingDelete ? (
+          <Loader />
+        ) : successDelete ? (
+          <Message variant="success">User Deleted</Message>
+        ) : (
+          <></>
+        )}
         {error ? (
           <Message variant="danger">{error}</Message>
         ) : loading ? (

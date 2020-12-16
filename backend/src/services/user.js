@@ -6,8 +6,8 @@ const {
   BadRequestException,
   UnauthenticatedException,
 } = require('../../common/errors/exceptions');
-
 const userDao = require('../dao/user');
+const orderDao = require('../dao/order');
 
 exports.getAllUsers = () => {
   return userDao.getAllUsers();
@@ -86,9 +86,14 @@ exports.updateUser = async (userId, updateUser) => {
 };
 
 exports.deleteUser = async (userId) => {
-  const user = userDao.getUserById(userId);
+  const user = await userDao.getUserById(userId);
   if (!user) {
     throw new NotFoundException('User not found');
+  }
+
+  const orders = await orderDao.getOrdersByUserId(userId);
+  if (orders.length > 0) {
+    throw new BadRequestException("User has orders and can't be deleted");
   }
 
   return userDao.deleteUser(userId);

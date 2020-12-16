@@ -9,7 +9,8 @@ exports.getAllUsers = async () => {
 };
 
 exports.getUserById = async (userId) => {
-  let result = await User.findByPk(userId);
+  const result = await User.findByPk(userId);
+
   return Promise.resolve(result === null ? null : result.toJSON());
 };
 
