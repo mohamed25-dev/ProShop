@@ -5,18 +5,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listUsers } from '../actions/userActions';
+import { Roles } from '../common/constants';
 
-const UsersListScreen = () => {
+const UsersListScreen = ({ history }) => {
   const dispatch = useDispatch();
+
   const usersList = useSelector((state) => state.usersList);
   const { error, loading, users } = usersList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const deleteHandler = (userId) => {
     console.log('Delete User');
   };
+
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo && userInfo.roleId === Roles.ADMIN_ROLE) {
+      dispatch(listUsers());
+    } else {
+      history.push('/login');
+    }
+  }, [dispatch, history]);
 
   return (
     <>
