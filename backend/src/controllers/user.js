@@ -61,7 +61,24 @@ exports.getUserProfile = async (req, res) => {
 exports.updateUserProfile = async (req, res) => {
   let userId = req.user.id;
 
+  delete req.body.roleId;
+
   let user = await userService.updateUser(userId, req.body);
+
+  return responseWrapper.success(res, user);
+};
+
+exports.updateUser = async (req, res) => {
+  let userId = req.params.id;
+  let user = await userService.getUserById(userId);
+
+  if (!user) {
+    throw new UnauthenticatedException('User not Found');
+  }
+
+  delete req.body.password;
+
+  user = await userService.updateUser(userId, req.body);
 
   return responseWrapper.success(res, user);
 };

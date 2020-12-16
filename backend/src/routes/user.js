@@ -20,6 +20,7 @@ router.route('/login').post(userController.loginUser);
 router
   .route('/:id')
   .get(isAuthenticated, isAdmin, userController.getUserById)
-  .delete(isAuthenticated, isAdmin, userController.deleteUser);
+  .delete(isAuthenticated, isAdmin, userController.deleteUser)
+  .patch(isAuthenticated, isAdmin, userController.updateUser);
 
 module.exports = router;
