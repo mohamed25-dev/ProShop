@@ -72,7 +72,8 @@ exports.updateUser = async (userId, updateUser) => {
   }
 
   user.name = updateUser.name || user.name;
-  user.mobile_number = updateUser.mobile_number || user.mobile_number;
+  user.mobileNumber = updateUser.mobileNumber || user.mobileNumber;
+  user.roleId = updateUser.roleId || user.roleId;
 
   if (updateUser.password) {
     user.password = await bcrypt.hash(updateUser.password, 8);

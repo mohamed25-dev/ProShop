@@ -78,7 +78,7 @@ const UsersListScreen = ({ history }) => {
                     <td>{user.mobileNumber}</td>
                     <td>{user.roleId}</td>
                     <td>
-                      <LinkContainer to={`/user/${user.id}`}>
+                      <LinkContainer to={`/admin/user/${user.id}`}>
                         <Button variant="info" className="btn-sm mx-3">
                           <i className="fas fa-edit"></i>
                         </Button>

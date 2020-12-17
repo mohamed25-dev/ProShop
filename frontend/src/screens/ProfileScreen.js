@@ -47,7 +47,7 @@ const ProfileScreen = ({ history }) => {
     if (!userInfo) {
       history.push('/login');
     } else {
-      if (!user.name) {
+      if (!user.name || user.id !== userInfo.id) {
         dispatch(getUserDetails('profile'));
         dispatch(listMyOrders());
       } else {
