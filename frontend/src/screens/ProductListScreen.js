@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Row, Col, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers, deleteUser } from '../actions/userActions';
+import { listProducts, deleteProduct } from '../actions/productActions';
 import { Roles } from '../common/constants';
 
 const ProductListScreen = ({ history }) => {
@@ -13,31 +13,31 @@ const ProductListScreen = ({ history }) => {
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const userDelete = useSelector((state) => state.userDelete);
+  const productDelete = useSelector((state) => state.productDelete);
   const {
     error: errorDelete,
     success: successDelete,
     loading: loadingDelete,
-  } = userDelete;
+  } = productDelete;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const createProductHandler = (product) => {};
 
-  const deleteHandler = (userId) => {
+  const deleteHandler = (productId) => {
     if (window.confirm('Are you sure')) {
-      // Delete Product
+      dispatch(deleteProduct(productId));
     }
   };
 
   useEffect(() => {
     if (userInfo && userInfo.roleId === Roles.ADMIN_ROLE) {
-      dispatch(listUsers());
+      dispatch(listProducts());
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successDelete]);
 
   return (
     <>
@@ -52,15 +52,9 @@ const ProductListScreen = ({ history }) => {
         </Col>
       </Row>
       <div>
-        {errorDelete ? (
-          <Message variant="danger">{errorDelete}</Message>
-        ) : loadingDelete ? (
-          <Loader />
-        ) : successDelete ? (
-          <Message variant="success">User Deleted</Message>
-        ) : (
-          <></>
-        )}
+        {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+        {loadingDelete && <Loader />}
+        {successDelete && <Message variant="success">Product Deleted</Message>}
         {error ? (
           <Message variant="danger">{error}</Message>
         ) : loading ? (
