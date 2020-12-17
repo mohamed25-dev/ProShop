@@ -20,3 +20,10 @@ exports.getProductById = async (req, res) => {
 
   return responseWrapper.success(res, product);
 };
+
+exports.deleteProduct = async (req, res) => {
+  let productId = req.params.id;
+  await productService.deleteProduct(productId);
+
+  return responseWrapper.success(res);
+};

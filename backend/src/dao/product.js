@@ -24,3 +24,11 @@ exports.updateProductInStock = async (productId, count) => {
 
   return;
 };
+
+exports.deleteProduct = (productId) => {
+  return Product.destroy({
+    where: {
+      id: productId,
+    },
+  });
+};

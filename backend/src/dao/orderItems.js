@@ -17,6 +17,10 @@ exports.createOrderItem = (item) => {
   return OrderItems.create(item);
 };
 
-exports.getProductById = (productId) => {
-  return OrderItems.findByPk(productId);
+exports.getItemstByProductId = (productId) => {
+  return OrderItems.findAll({
+    where: {
+      productId,
+    },
+  });
 };
