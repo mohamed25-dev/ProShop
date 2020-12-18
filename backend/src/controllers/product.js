@@ -36,6 +36,7 @@ exports.createProduct = async (req, res) => {
     quantityInStock: req.body.quantityInStock,
     categoryId: req.body.categoryId,
     image: req.body.image,
+    description: req.body.description,
   };
 
   product = await productService.createProduct(product);

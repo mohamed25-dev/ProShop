@@ -48,6 +48,7 @@ exports.updateProduct = async (productId, updatedProduct) => {
   product.price = updatedProduct.price || product.price;
   product.image = updatedProduct.image || product.image;
   product.categoryId = updatedProduct.categoryId || product.categoryId;
+  product.description = updatedProduct.description || product.description;
   product.quantityInStock =
     updatedProduct.quantityInStock || product.quantityInStock;
 
