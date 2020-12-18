@@ -15,6 +15,8 @@ const ProductCreateScreen = ({ history }) => {
   const [price, setPrice] = useState('');
   const [quantityInStock, setQuantityInStock] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('');
 
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, success } = productCreate;
@@ -40,7 +42,8 @@ const ProductCreateScreen = ({ history }) => {
         price,
         quantityInStock,
         categoryId: Number(categoryId),
-        image: '/images/camera.jpg',
+        image,
+        description,
       })
     );
   };
@@ -91,6 +94,25 @@ const ProductCreateScreen = ({ history }) => {
               onChange={(e) => setCategoryId(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
+          <Form.Group controlId="image">
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              placeholder="Product Image"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              placeholder="Product Description "
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
           <Button type="submit" variant="primary">
             Create
           </Button>

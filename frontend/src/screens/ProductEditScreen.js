@@ -22,6 +22,8 @@ const ProductCreateScreen = ({ match, history }) => {
   const [price, setPrice] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [quantityInStock, setQuantityInStock] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('');
 
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
@@ -44,6 +46,8 @@ const ProductCreateScreen = ({ match, history }) => {
         setPrice(product.price);
         setQuantityInStock(product.quantityInStock);
         setCategoryId(product.categoryId);
+        setDescription(product.description);
+        setImage(product.image);
       }
 
       if (successUpdate) {
@@ -63,7 +67,8 @@ const ProductCreateScreen = ({ match, history }) => {
         price,
         quantityInStock,
         categoryId: Number(categoryId),
-        image: '/images/camera.jpg',
+        image,
+        description,
       })
     );
   };
@@ -111,11 +116,30 @@ const ProductCreateScreen = ({ match, history }) => {
           <Form.Group controlId="categoryId">
             <Form.Label>Category</Form.Label>
             <Form.Control
-              placeholder="Choode Product Category "
+              placeholder="Choose Product Category "
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
+          <Form.Group controlId="image">
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              placeholder="Product Image"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              placeholder="Product Description "
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
           <Button type="submit" variant="primary">
             Update
           </Button>
