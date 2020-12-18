@@ -7,11 +7,13 @@ const productController = require('../controllers/product');
 
 router
   .route('/')
-  .get(isAuthenticated, isAdmin, productController.getAllProducts);
+  .get(productController.getAllProducts)
+  .post(isAuthenticated, isAdmin, productController.createProduct);
 
 router
   .route('/:id')
   .get(productController.getProductById)
-  .delete(isAuthenticated, isAdmin, productController.deleteProduct);
+  .delete(isAuthenticated, isAdmin, productController.deleteProduct)
+  .patch(isAuthenticated, isAdmin, productController.updateProduct);
 
 module.exports = router;

@@ -1,9 +1,10 @@
 const productDao = require('../dao/product');
 const orderItemsDao = require('../dao/orderItems');
+const { getId } = require('../../common/idGenerator');
+
 const {
   NotFoundException,
   BadRequestException,
-  UnauthenticatedException,
 } = require('../../common/errors/exceptions');
 
 exports.getAllProducts = () => {
@@ -26,4 +27,32 @@ exports.deleteProduct = async (productId) => {
   }
 
   return productDao.deleteProduct(productId);
+};
+
+exports.createProduct = async (product) => {
+  let id = getId();
+
+  product.id = id;
+  await productDao.createProduct(product);
+
+  return product;
+};
+
+exports.updateProduct = async (productId, updatedProduct) => {
+  let product = await productDao.getProductById(productId);
+  if (!product) {
+    throw new NotFoundException('Product Not Found');
+  }
+
+  product.name = updatedProduct.name || product.name;
+  product.price = updatedProduct.price || product.price;
+  product.image = updatedProduct.image || product.image;
+  product.categoryId = updatedProduct.categoryId || product.categoryId;
+  product.quantityInStock =
+    updatedProduct.quantityInStock || product.quantityInStock;
+
+  await productDao.updateProduct(product);
+
+  product = await productDao.getProductById(productId);
+  return product;
 };

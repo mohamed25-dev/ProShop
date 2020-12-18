@@ -27,3 +27,25 @@ exports.deleteProduct = async (req, res) => {
 
   return responseWrapper.success(res);
 };
+
+exports.createProduct = async (req, res) => {
+  //TODO: validate request body
+  let product = {
+    name: req.body.name,
+    price: req.body.price,
+    quantityInStock: req.body.quantityInStock,
+    categoryId: req.body.categoryId,
+    image: req.body.image,
+  };
+
+  product = await productService.createProduct(product);
+
+  return responseWrapper.success(res, product);
+};
+
+exports.updateProduct = async (req, res) => {
+  let productId = req.params.id;
+  product = await productService.updateProduct(productId, req.body);
+
+  return responseWrapper.success(res, product);
+};

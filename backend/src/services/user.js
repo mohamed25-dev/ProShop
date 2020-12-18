@@ -4,8 +4,8 @@ const { generateAuthToken } = require('../../common/token');
 const {
   NotFoundException,
   BadRequestException,
-  UnauthenticatedException,
 } = require('../../common/errors/exceptions');
+const { Roles } = require('../../common/constants');
 const userDao = require('../dao/user');
 const orderDao = require('../dao/order');
 
@@ -49,7 +49,7 @@ exports.createUser = async (user) => {
   let id = getId();
 
   user.id = id;
-  user.roleId = 1;
+  user.roleId = Roles.CUSTOMER_ROLE;
   user.password = await bcrypt.hash(user.password, 8);
 
   await userDao.createUser(user);
@@ -57,26 +57,26 @@ exports.createUser = async (user) => {
   return user;
 };
 
-exports.updateUser = async (userId, updateUser) => {
+exports.updateUser = async (userId, updatedUser) => {
   let user = await userDao.getUserById(userId);
   if (!user) {
     throw new NotFoundException('User Not Found');
   }
 
-  if (updateUser.email) {
-    let userExist = await userDao.getUserByEmail(updateUser.email);
+  if (updatedUser.email) {
+    let userExist = await userDao.getUserByEmail(updatedUser.email);
     if (userExist && userExist.id !== userId) {
       throw new BadRequestException('User with the same email exist');
     }
-    user.email = updateUser.email;
+    user.email = updatedUser.email;
   }
 
-  user.name = updateUser.name || user.name;
-  user.mobileNumber = updateUser.mobileNumber || user.mobileNumber;
-  user.roleId = updateUser.roleId || user.roleId;
+  user.name = updatedUser.name || user.name;
+  user.mobileNumber = updatedUser.mobileNumber || user.mobileNumber;
+  user.roleId = updatedUser.roleId || user.roleId;
 
-  if (updateUser.password) {
-    user.password = await bcrypt.hash(updateUser.password, 8);
+  if (updatedUser.password) {
+    user.password = await bcrypt.hash(updatedUser.password, 8);
   }
 
   await userDao.updateUser(user);

@@ -13,8 +13,9 @@ exports.getProductsByIds = (ids) => {
   });
 };
 
-exports.getProductById = (productId) => {
-  return Product.findByPk(productId);
+exports.getProductById = async (productId) => {
+  const result = await Product.findByPk(productId);
+  return Promise.resolve(result === null ? null : result.toJSON());
 };
 
 exports.updateProductInStock = async (productId, count) => {
@@ -31,4 +32,26 @@ exports.deleteProduct = (productId) => {
       id: productId,
     },
   });
+};
+
+exports.createProduct = async (product) => {
+  return Product.create({
+    ...product,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
+};
+
+exports.updateProduct = (product) => {
+  return Product.update(
+    {
+      ...product,
+      updatedAt: new Date(),
+    },
+    {
+      where: {
+        id: product.id,
+      },
+    }
+  );
 };

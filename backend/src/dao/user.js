@@ -25,20 +25,17 @@ exports.getUserByEmail = async (userEmail) => {
 };
 
 exports.createUser = async (user) => {
-  const result = await User.create({
+  return User.create({
     ...user,
     createdAt: new Date(),
     updatedAt: new Date(),
   });
-
-  return Promise.resolve(result === null ? null : result.toJSON());
 };
 
 exports.updateUser = (user) => {
   return User.update(
     {
       ...user,
-      createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
