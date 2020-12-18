@@ -23,8 +23,6 @@ const ProductListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const createProductHandler = (product) => {};
-
   const deleteHandler = (productId) => {
     if (window.confirm('Are you sure')) {
       dispatch(deleteProduct(productId));
@@ -46,9 +44,11 @@ const ProductListScreen = ({ history }) => {
           <h1>Products: </h1>
         </Col>
         <Col className="text-right">
-          <Button className="my-3" onClick={() => createProductHandler({})}>
-            <i className="fas fa-plus"></i> Create Product
-          </Button>
+          <LinkContainer to={`/admin/product/create`}>
+            <Button className="my-3">
+              <i className="fas fa-plus"></i> Create Product
+            </Button>
+          </LinkContainer>
         </Col>
       </Row>
       <div>
@@ -84,7 +84,7 @@ const ProductListScreen = ({ history }) => {
                     <td>{product.image}</td>
 
                     <td>
-                      <LinkContainer to={`/admin/product/${product.id}`}>
+                      <LinkContainer to={`/admin/product/${product.id}/edit`}>
                         <Button variant="info" className="btn-sm mx-3">
                           <i className="fas fa-edit"></i>
                         </Button>
