@@ -39,7 +39,7 @@ exports.uploadMiddleware = (req, res, next) => {
 
   upload(req, res, function (err) {
     if (err) {
-      throw new Error('Something went worong');
+      throw new Error('Something went worong' + err);
     }
     next();
   });

@@ -36,16 +36,17 @@ const ProductCreateScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      createProduct({
-        name,
-        price,
-        quantityInStock,
-        categoryId: Number(categoryId),
-        image,
-        description,
-      })
-    );
+
+    const formData = new FormData();
+
+    formData.append('image', image);
+    formData.append('name', name);
+    formData.append('price', price);
+    formData.append('quantityInStock', quantityInStock);
+    formData.append('categoryId', categoryId);
+    formData.append('description', description);
+
+    dispatch(createProduct(formData));
   };
 
   return (
@@ -99,8 +100,13 @@ const ProductCreateScreen = ({ history }) => {
             <Form.Label>Image</Form.Label>
             <Form.Control
               placeholder="Product Image"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              type="file"
+              onChange={(e) => {
+                // let file = e.target.files[0];
+                // const formData = new FormData();
+                // formData.append('image', file);
+                setImage(e.target.files[0]);
+              }}
             ></Form.Control>
           </Form.Group>
 

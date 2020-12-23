@@ -98,6 +98,12 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 export const createProduct = (product) => async (dispatch, getState) => {
   try {
+    console.log(
+      product.image,
+      product.name,
+      product.price,
+      product.description
+    );
     dispatch({ type: PRODUCT_CREATE_REQUEST });
 
     const {
@@ -106,6 +112,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
 
     let config = {
       headers: {
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
