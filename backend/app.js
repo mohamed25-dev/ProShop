@@ -1,3 +1,4 @@
+const path = require('path');
 const dotenv = require('dotenv');
 const express = require('express');
 const colors = require('colors');
@@ -12,6 +13,7 @@ const orderRoutes = require('./src/routes/order');
 dotenv.config();
 app.use(express.json());
 
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);

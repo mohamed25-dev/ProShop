@@ -3,12 +3,18 @@ require('express-async-errors');
 const express = require('express');
 const router = express.Router();
 const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
+const { uploadMiddleware } = require('../middleware/uploadFiles');
 const productController = require('../controllers/product');
 
 router
   .route('/')
   .get(productController.getAllProducts)
-  .post(isAuthenticated, isAdmin, productController.createProduct);
+  .post(
+    isAuthenticated,
+    isAdmin,
+    uploadMiddleware,
+    productController.createProduct
+  );
 
 router
   .route('/:id')
