@@ -28,3 +28,7 @@ yarn-error.log*
 *.jpg
 *.jpeg
 *.png
+
+# test and play ground
+test.js
+playground.js
