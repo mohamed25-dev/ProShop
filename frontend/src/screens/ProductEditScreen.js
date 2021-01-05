@@ -10,6 +10,7 @@ import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_DETAILS_RESET,
 } from '../constants/productConstants';
+import { listCategories } from '../actions/categoryAction';
 
 const ProductCreateScreen = ({ match, history }) => {
   const productId = match.params.id;
@@ -35,6 +36,9 @@ const ProductCreateScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const categoriesList = useSelector((state) => state.categoryList);
+  const { categories } = categoriesList;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
@@ -57,7 +61,19 @@ const ProductCreateScreen = ({ match, history }) => {
         history.push('/admin/products');
       }
     }
-  }, [dispatch, history, product, userInfo, successUpdate, productId]);
+
+    if (!categories || categories.length === 0) {
+      dispatch(listCategories());
+    }
+  }, [
+    dispatch,
+    history,
+    product,
+    userInfo,
+    successUpdate,
+    productId,
+    categories,
+  ]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -111,6 +127,21 @@ const ProductCreateScreen = ({ match, history }) => {
               value={quantityInStock}
               onChange={(e) => setQuantityInStock(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="categoryId">
+            <Form.Label>Category</Form.Label>
+            <Form.Control
+              as="select"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              {categories.map((category) => (
+                <option key={category.name} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId="categoryId">

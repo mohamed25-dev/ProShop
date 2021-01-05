@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProducts, deleteProduct } from '../actions/productActions';
+import { listCategories } from '../actions/categoryAction';
 import { Role } from '../common/constants';
 
 const ProductListScreen = ({ history }) => {
@@ -12,6 +13,9 @@ const ProductListScreen = ({ history }) => {
 
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
+
+  const categoriesList = useSelector((state) => state.categoryList);
+  const { categories } = categoriesList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -35,7 +39,10 @@ const ProductListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, successDelete]);
+    if (!categories || categories.length === 0) {
+      dispatch(listCategories());
+    }
+  }, [dispatch, history, userInfo, successDelete, categories]);
 
   return (
     <>
@@ -80,7 +87,13 @@ const ProductListScreen = ({ history }) => {
                     <td>{product.name}</td>
                     <td>${product.price}</td>
                     <td>{product.quantityInStock}</td>
-                    <td>{product.categoryId}</td>
+                    <td>
+                      {categories.map((category) => {
+                        if (category.id === product.categoryId) {
+                          return category.name;
+                        }
+                      })}
+                    </td>
                     <td>{product.image}</td>
 
                     <td>
