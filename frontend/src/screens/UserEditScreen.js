@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { getUserDetails, updateUser } from '../actions/userActions';
+import { listRoles } from '../actions/roleAction';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
 
 const UserEditScreen = ({ match, history }) => {
@@ -19,6 +20,9 @@ const UserEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+
+  const rolesList = useSelector((state) => state.roleList);
+  const { loadingRole, errorRole, roles } = rolesList;
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
@@ -34,6 +38,9 @@ const UserEditScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push('/login');
     }
+    if (!roles || roles.length === 0) {
+      dispatch(listRoles());
+    }
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       history.push('/admin/users');
@@ -47,7 +54,7 @@ const UserEditScreen = ({ match, history }) => {
         setRoleId(user.roleId);
       }
     }
-  }, [dispatch, history, userId, successUpdate, user]);
+  }, [dispatch, history, userId, successUpdate, user, roles]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -110,18 +117,23 @@ const UserEditScreen = ({ match, history }) => {
             <Form.Group controlId="roleid">
               <Form.Label>Role</Form.Label>
               <Form.Control
-                placeholder="Role"
+                as="select"
                 value={roleId}
                 onChange={(e) => setRoleId(e.target.value)}
-              ></Form.Control>
+              >
+                {roles.map((role) => (
+                  <option key={role.name} value={role.id}>
+                    {role.name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
+
             <Button type="submit" variant="primary">
               Update
             </Button>
           </Form>
         )}
-
-        <h1>Edit User</h1>
       </FormContainer>
     </>
   );
