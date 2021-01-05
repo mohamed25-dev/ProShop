@@ -10,6 +10,7 @@ const productRoutes = require('./src/routes/product');
 const userRoutes = require('./src/routes/user');
 const orderRoutes = require('./src/routes/order');
 const roleRoutes = require('./src/routes/role');
+const categoryRoutes = require('./src/routes/category');
 
 dotenv.config();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/roles', roleRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is Listening !!');
