@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProducts, deleteProduct } from '../actions/productActions';
-import { Roles } from '../common/constants';
+import { Role } from '../common/constants';
 
 const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const ProductListScreen = ({ history }) => {
   };
 
   useEffect(() => {
-    if (userInfo && userInfo.roleId === Roles.ADMIN_ROLE) {
+    if (userInfo && userInfo.roleId === Role.ADMIN_ROLE) {
       dispatch(listProducts());
     } else {
       history.push('/login');

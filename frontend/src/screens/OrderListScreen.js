@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listOrders } from '../actions/orderAction';
-import { Roles } from '../common/constants';
+import { Role, OrderStatus } from '../common/constants';
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const OrderListScreen = ({ history }) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.roleId === Roles.ADMIN_ROLE) {
+    if (userInfo && userInfo.roleId === Role.ADMIN_ROLE) {
       dispatch(listOrders());
     } else {
       history.push('/login');
@@ -55,10 +55,18 @@ const OrderListScreen = ({ history }) => {
                   <tr key={order.id}>
                     <td>{order.id}</td>
                     <td>{order.userId}</td>
-                    <td>${order.statusId}</td>
+                    <td>
+                      {order.statusId === OrderStatus.CREATED
+                        ? 'Created'
+                        : order.statusId === OrderStatus.PAID
+                        ? 'Paid'
+                        : order.statusId === OrderStatus.SHIPPED
+                        ? 'Shipped'
+                        : 'Delivered'}
+                    </td>
                     <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>{order.shippingPrice}</td>
-                    <td>{order.taxPrice}</td>
+                    <td>${order.shippingPrice}</td>
+                    <td>${order.taxPrice}</td>
 
                     <td>
                       <LinkContainer to={`/admin/order/${order.id}/edit`}>

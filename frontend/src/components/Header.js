@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../actions/userActions';
-import { Roles } from '../common/constants';
+import { Role } from '../common/constants';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const Header = () => {
                 </LinkContainer>
               )}
 
-              {userInfo && userInfo.roleId === Roles.ADMIN_ROLE ? (
+              {userInfo && userInfo.roleId === Role.ADMIN_ROLE ? (
                 <NavDropdown title="Admin" id="adminmenu">
                   <LinkContainer to="/admin/users">
                     <NavDropdown.Item>Users</NavDropdown.Item>
