@@ -76,7 +76,9 @@ const UsersListScreen = ({ history }) => {
                       <a href={`mailto:${user.email}`}>{user.email}</a>
                     </td>
                     <td>{user.mobileNumber}</td>
-                    <td>{user.roleId}</td>
+                    <td>
+                      {user.roleId === Roles.ADMIN_ROLE ? 'Admin' : 'Customer'}
+                    </td>
                     <td>
                       <LinkContainer to={`/admin/user/${user.id}`}>
                         <Button variant="info" className="btn-sm mx-3">
