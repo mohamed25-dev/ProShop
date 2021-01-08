@@ -30,7 +30,7 @@ const UsersListScreen = ({ history }) => {
   };
 
   useEffect(() => {
-    if (userInfo && userInfo.roleId === Roles.ADMIN_ROLE) {
+    if (userInfo && userInfo.roleId === Role.ADMIN_ROLE) {
       dispatch(listUsers());
     } else {
       history.push('/login');
@@ -77,7 +77,7 @@ const UsersListScreen = ({ history }) => {
                     </td>
                     <td>{user.mobileNumber}</td>
                     <td>
-                      {user.roleId === Roles.ADMIN_ROLE ? 'Admin' : 'Customer'}
+                      {user.roleId === Role.ADMIN_ROLE ? 'Admin' : 'Customer'}
                     </td>
                     <td>
                       <LinkContainer to={`/admin/user/${user.id}`}>
