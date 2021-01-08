@@ -35,12 +35,12 @@ const ProductListScreen = ({ history }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.roleId === Role.ADMIN_ROLE) {
+      if (!categories || categories.length === 0) {
+        dispatch(listCategories());
+      }
       dispatch(listProducts());
     } else {
       history.push('/login');
-    }
-    if (!categories || categories.length === 0) {
-      dispatch(listCategories());
     }
   }, [dispatch, history, userInfo, successDelete, categories]);
 
