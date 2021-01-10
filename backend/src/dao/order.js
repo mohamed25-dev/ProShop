@@ -94,3 +94,25 @@ exports.setPaid = (orderId) => {
     }
   );
 };
+
+exports.setShipped = (orderId) => {
+  return Order.update(
+    { statusId: 3 },
+    {
+      where: {
+        id: orderId,
+      },
+    }
+  );
+};
+
+exports.setDelivered = (orderId) => {
+  return Order.update(
+    { statusId: 4 },
+    {
+      where: {
+        id: orderId,
+      },
+    }
+  );
+};

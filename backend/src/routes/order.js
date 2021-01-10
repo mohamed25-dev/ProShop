@@ -17,5 +17,9 @@ router
   .get(isAuthenticated, isAdmin, orderController.getOrderDetails);
 
 router.route('/:id/pay').patch(isAuthenticated, orderController.payOrder);
+router.route('/:id/ship').patch(isAuthenticated, orderController.shipOrder);
+router
+  .route('/:id/deliver')
+  .patch(isAuthenticated, orderController.deliverOrder);
 
 module.exports = router;

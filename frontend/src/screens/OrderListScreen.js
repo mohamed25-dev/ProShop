@@ -42,7 +42,7 @@ const OrderListScreen = ({ history }) => {
               <tr>
                 <th>Order ID</th>
                 <th>User ID</th>
-                <th>Status Id</th>
+                <th>Status</th>
                 <th>Created At</th>
                 <th>Shipping Price</th>
                 <th>Tax Price</th>

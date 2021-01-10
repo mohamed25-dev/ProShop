@@ -67,3 +67,17 @@ exports.payOrder = async (req, res) => {
 
   return responseWrapper.success(res, orders);
 };
+
+exports.shipOrder = async (req, res) => {
+  let orderId = req.params.id;
+  let orders = await orderService.shipOrder(orderId);
+
+  return responseWrapper.success(res, orders);
+};
+
+exports.deliverOrder = async (req, res) => {
+  let orderId = req.params.id;
+  let orders = await orderService.deliverOrder(orderId);
+
+  return responseWrapper.success(res, orders);
+};

@@ -53,3 +53,11 @@ exports.payOrder = async (paymentData) => {
   await orderDao.setPaid(paymentData.orderId);
   return paymentDao.payOrder(paymentData);
 };
+
+exports.shipOrder = async (orderId) => {
+  return orderDao.setShipped(orderId);
+};
+
+exports.deliverOrder = async (orderId) => {
+  return orderDao.setDelivered(orderId);
+};
